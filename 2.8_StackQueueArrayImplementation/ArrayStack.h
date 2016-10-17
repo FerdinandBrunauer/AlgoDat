@@ -4,6 +4,7 @@
 
 #include <stdbool.h>
 #include <stdlib.h>
+#include <string.h> // memcpy
 
 /*
 *	+---+
@@ -35,5 +36,5 @@ bool IsArrayStackEmpty(ArrayStack* stack);
 
 void* TopOfArrayStack(ArrayStack* stack);
 
-bool PushToArrayStack(ArrayStack* stack, void* data);
+bool PushToArrayStack(ArrayStack* stack, void* data, size_t size);
 void* PopFromArrayStack(ArrayStack* stack);

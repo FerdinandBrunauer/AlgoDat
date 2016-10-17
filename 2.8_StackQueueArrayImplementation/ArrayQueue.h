@@ -2,6 +2,7 @@
 
 #include "Constants.h"
 
+#include <string.h>
 #include <stdbool.h>
 #include <stdlib.h>
 
@@ -25,5 +26,5 @@ bool IsArrayQueueEmpty(ArrayQueue* queue);
 void* FrontFromArrayQueue(ArrayQueue* queue);
 void* BackFromArrayQueue(ArrayQueue* queue);
 
-bool EnqueueToArrayQueue(ArrayQueue* queue, void* data);
+bool EnqueueToArrayQueue(ArrayQueue* queue, void* data, size_t size);
 void* DequeueFromArrayQueue(ArrayQueue* queue);

@@ -2,6 +2,7 @@
 
 #include "ArrayQueue.h"
 #include "ArrayStack.h"
+#include "Constants.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -9,86 +10,141 @@
 
 char* BoolToString(bool value)
 {
-	return (value == true) ? "true" : "false";
+	return (value == true) ? "successful" : "failed";
+}
+
+void TestArrayStack()
+{
+	printf("** ArrayStack implementation **\n");
+
+	// We have 2 possibilities. We init it with the method or use: ArrayStack arrayStack = { 0 };
+	ArrayStack arrayStack;
+	InitArrayStack(&arrayStack);
+
+	// Stack state
+	printf("Is full: %s\nIs empty: %s\n", BoolToString(IsArrayStackFull(&arrayStack)), BoolToString(IsArrayStackEmpty(&arrayStack)));
+
+	printf("\n** INT **\n");
+	// Push INT
+	int intValue = 22;
+	bool intResult = PushToArrayStack(&arrayStack, &intValue, sizeof(int));
+	printf("Push: %d -> %s \n", intValue, BoolToString(intResult));
+	// Top INT
+	intValue = *(int*)TopOfArrayStack(&arrayStack);
+	printf("Top: %d\n", intValue);
+	// Pop INT
+	void* rawIntData = PopFromArrayStack(&arrayStack);
+	intValue = *(int*)rawIntData;
+	free(rawIntData);
+	printf("Popped: %d\n", intValue);
+
+	printf("\n** CHAR **\n");
+	// Push CHAR
+	char charValue = 'A';
+	bool charResult = PushToArrayStack(&arrayStack, &charValue, sizeof(char));
+	printf("Push: %c -> %s \n", charValue, BoolToString(charResult));
+	// Top CHAR
+	charValue = *(int*)TopOfArrayStack(&arrayStack);
+	printf("Top: %c\n", charValue);
+	// Pop CHAR
+	void* rawCharData = PopFromArrayStack(&arrayStack);
+	charValue = *(int*)rawCharData;
+	free(rawCharData);
+	printf("Popped: %c\n", charValue);
+
+	// Overfill
+	printf("\n** Overfill with CHAR's **\n");
+	const char FirstChar = 'A';
+	const char LastChar = (char)((int)FirstChar + MAX_ARRAY_SIZE);
+	printf("Push: [");
+	for (int i = (int)FirstChar; i <= (int)LastChar; ++i)
+	{
+		bool fillResult = PushToArrayStack(&arrayStack, &i, sizeof(char));
+		printf(i == FirstChar ? "%c -> %s" : "; %c -> %s", (char)i, BoolToString(fillResult));
+	}
+	printf("]\n");
+	// Top CHAR
+	charValue = *(int*)TopOfArrayStack(&arrayStack);
+	printf("Top: %c\n", charValue);
+
+	// Empty CHAR
+	printf("\n** EMPTY with CHAR's **\n");
+	void* rawResult;
+	printf("Pop: [");
+	bool firstRun = true;
+	for (rawResult = PopFromArrayStack(&arrayStack); rawResult != NULL; rawResult = PopFromArrayStack(&arrayStack))
+	{
+		charValue = *(char*)rawResult;
+		free(rawResult);
+		printf(firstRun ? "%c" : "; %c", charValue);
+		firstRun = false;
+	}
+	printf("]\n");
+}
+
+void TestArrayQueue()
+{
+	printf("** ArrayQueue implementation **\n");
+
+	ArrayQueue arrayQueue;
+	InitArrayQueue(&arrayQueue);
+
+	// Queue state
+	printf("Is full: %s\nIs empty: %s\n", BoolToString(IsArrayQueueFull(&arrayQueue)), BoolToString(IsArrayQueueEmpty(&arrayQueue)));
+
+	printf("\n** INT **\n");
+	// Enqueue INT
+	int intValue = 22;
+	bool intResult = EnqueueToArrayQueue(&arrayQueue, &intValue, sizeof(int));
+	printf("Enqueue: %d -> %s \n", intValue, BoolToString(intResult));
+	// Dequeue INT
+	void* rawIntData = DequeueFromArrayQueue(&arrayQueue);
+	intValue = *(int*)rawIntData;
+	free(rawIntData);
+	printf("Dequeue: %d\n", intValue);
+
+	printf("\n** CHAR **\n");
+	// Enqueue CHAR
+	char charValue = 'A';
+	bool charResult = EnqueueToArrayQueue(&arrayQueue, &charValue, sizeof(char));
+	printf("Enqueue: %c -> %s \n", charValue, BoolToString(charResult));
+	// Dequeue CHAR
+	void* rawCharData = DequeueFromArrayQueue(&arrayQueue);
+	charValue = *(int*)rawCharData;
+	free(rawCharData);
+	printf("Dequeue: %c\n", charValue);
+
+	// Overfill
+	printf("\n** Overfill with CHAR's **\n");
+	const char FirstChar = 'A';
+	const char LastChar = (char)((int)FirstChar + MAX_ARRAY_SIZE);
+	printf("Enqueue: [");
+	for (int i = (int)FirstChar; i <= (int)LastChar; ++i)
+	{
+		bool fillResult = EnqueueToArrayQueue(&arrayQueue, &i, sizeof(char));
+		printf(i == FirstChar ? "%c -> %s" : "; %c -> %s", (char)i, BoolToString(fillResult));
+	}
+	printf("]\n");
+
+	// Empty CHAR
+	printf("\n** EMPTY with CHAR's **\n");
+	void* rawResult;
+	printf("Dequeue: [");
+	bool firstRun = true;
+	for (rawResult = DequeueFromArrayQueue(&arrayQueue); rawResult != NULL; rawResult = DequeueFromArrayQueue(&arrayQueue))
+	{
+		charValue = *(char*)rawResult;
+		free(rawResult);
+		printf(firstRun ? "%c" : "; %c", charValue);
+		firstRun = false;
+	}
+	printf("]\n");
 }
 
 int main()
 {
-	printf("** ArrayStack implementation **\n");
-	ArrayStack arrayStack;
-	// We have 2 possibilities. We init it with the method or use: ArrayStack arrayStack = { 0 };
-	InitArrayStack(&arrayStack);
-	printf("Is full: %s\n", BoolToString(IsArrayStackFull(&arrayStack)));
-	printf("Is empty: %s\n", BoolToString(IsArrayStackEmpty(&arrayStack)));
-
-	int* arrayValue = malloc(sizeof(int));
-	*arrayValue = 22;
-	printf("Push: %d->%s\n", *arrayValue, BoolToString(PushToArrayStack(&arrayStack, arrayValue)));
-	printf("Top: %d\n", *(int*)TopOfArrayStack(&arrayStack));
-	printf("Pop: %d\n", *(int*)PopFromArrayStack(&arrayStack));
-
-	printf("Add 11 chars: ");
-	for (int i = 65; i < 76; ++i)
-	{
-		void* value = malloc(sizeof(char));
-		value = (char*)i;
-		printf(i == 65 ? "%c->%s" : ", %c->%s", (char)i, BoolToString(PushToArrayStack(&arrayStack, value)));
-	}
-
-	printf("\nIs full: %s\n", BoolToString(IsArrayStackFull(&arrayStack)));
-	printf("Is empty: %s\n", BoolToString(IsArrayStackEmpty(&arrayStack)));
-	printf("Top: %c\n", (char)((char*)TopOfArrayStack(&arrayStack)));
-
-	printf("Pop 15 elements: ");
-	for (int i = 0; i < 15; ++i)
-	{
-		printf(i == 0 ? "%c" : ", %c", (char*)PopFromArrayStack(&arrayStack));
-	}
-
-	printf("\nIs full: %s\n", BoolToString(IsArrayStackFull(&arrayStack)));
-	printf("Is empty: %s\n", BoolToString(IsArrayStackEmpty(&arrayStack)));
-
-	printf("\n** ArrayQueue implementation **\n");
-	ArrayQueue arrayQueue;
-	InitArrayQueue(&arrayQueue);
-	printf("Is full: %s\n", BoolToString(IsArrayQueueFull(&arrayQueue)));
-	printf("Is empty: %s\n", BoolToString(IsArrayQueueEmpty(&arrayQueue)));
-
-	int* queueValue = malloc(sizeof(int));
-	queueValue = (int*)45;
-	printf("Enqueue: %d->%s\n", (int)queueValue, BoolToString(EnqueueToArrayQueue(&arrayQueue, queueValue)));
-	int* queueValue1 = malloc(sizeof(int));
-	queueValue1 = (int*)136;
-	printf("Enqueue: %d->%s\n", (int)queueValue1, BoolToString(EnqueueToArrayQueue(&arrayQueue, queueValue1)));
-	printf("Front: %d\n", (int)((int*)FrontFromArrayQueue(&arrayQueue)));
-	printf("Back: %d\n", (int)((int*)BackFromArrayQueue(&arrayQueue)));
-	printf("Dequeue: %d\n", (int)((int*)DequeueFromArrayQueue(&arrayQueue)));
-	printf("Dequeue: %d\n", (int)((int*)DequeueFromArrayQueue(&arrayQueue)));
-	printf("Is full: %s\n", BoolToString(IsArrayQueueFull(&arrayQueue)));
-	printf("Is empty: %s\n", BoolToString(IsArrayQueueEmpty(&arrayQueue)));
-
-	printf("Add 11 chars: ");
-	for (int i = 65; i < 76; ++i)
-	{
-		void* value = malloc(sizeof(char));
-		value = (char*)i;
-		printf(i == 65 ? "%c->%s" : ", %c->%s", (char)i, BoolToString(EnqueueToArrayQueue(&arrayQueue, value)));
-	}
-
-	printf("\nDequeue: %c\n", (char)((char*)DequeueFromArrayQueue(&arrayQueue)));
-	printf("Dequeue: %c\n", (char)((char*)DequeueFromArrayQueue(&arrayQueue)));
-	printf("Add 5 chars: ");
-	for (int i = 76; i < 80; ++i)
-	{
-		void* value = malloc(sizeof(char));
-		value = (char*)i;
-		printf(i == 65 ? "%c->%s" : ", %c->%s", (char)i, BoolToString(EnqueueToArrayQueue(&arrayQueue, value)));
-	}
-
-	printf("\nFront: %c\n", (char)((char*)FrontFromArrayQueue(&arrayQueue)));
-	printf("Back: %c\n", (char)((char*)BackFromArrayQueue(&arrayQueue)));
-	printf("Is full: %s\n", BoolToString(IsArrayQueueFull(&arrayQueue)));
-	printf("Is empty: %s\n", BoolToString(IsArrayQueueEmpty(&arrayQueue)));
+	TestArrayStack();
+	TestArrayQueue();
 
 	getchar();
 

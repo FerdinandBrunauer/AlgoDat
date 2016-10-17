@@ -30,17 +30,20 @@ void* TopOfArrayStack(ArrayStack* stack)
 /*
 * \return false if stack is full, true if it is inserted successful
 */
-bool PushToArrayStack(ArrayStack* stack, void* data)
+bool PushToArrayStack(ArrayStack* stack, void* data, size_t size)
 {
 	if (IsArrayStackFull(stack))
 	{
 		return false;
 	}
 
-	stack->data[stack->top++] = data;
+	stack->data[stack->top++] = memcpy(malloc(size), data, size);
 	return true;
 }
 
+/*
+* \return the pointer to the data. Make sure to free the memory!
+*/
 void* PopFromArrayStack(ArrayStack* stack)
 {
 	if (IsArrayStackEmpty(stack))

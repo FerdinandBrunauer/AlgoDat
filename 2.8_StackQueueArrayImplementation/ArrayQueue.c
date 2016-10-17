@@ -46,14 +46,16 @@ void* BackFromArrayQueue(ArrayQueue* queue)
 	return NULL;
 }
 
+#define ENQUEUE(QUEUE,POSITION,DATA,SIZE) QUEUE->data[POSITION] = memcpy(malloc(SIZE), DATA, SIZE); ++QUEUE->elements;
+
 /*
 * \return False if not enqueued, true if enqueued
 */
-bool EnqueueToArrayQueue(ArrayQueue* queue, void* data)
+bool EnqueueToArrayQueue(ArrayQueue* queue, void* data, size_t size)
 {
 	if (IsArrayQueueEmpty(queue))
 	{
-		queue->data[queue->elements++] = data;
+		ENQUEUE(queue, 0, data, size)
 		return true;
 	}
 
@@ -74,8 +76,7 @@ bool EnqueueToArrayQueue(ArrayQueue* queue, void* data)
 			// When we now find a NULL element, we found the next free space
 			if (queue->data[i] == NULL)
 			{
-				queue->data[i] = data;
-				++queue->elements;
+				ENQUEUE(queue, i, data, size)
 				return true;
 			}
 		}
@@ -91,8 +92,7 @@ bool EnqueueToArrayQueue(ArrayQueue* queue, void* data)
 			queue->data[i - 1] = queue->data[i];
 		}
 
-		queue->data[MAX_ARRAY_SIZE - 1] = data;
-		++queue->elements;
+		ENQUEUE(queue, MAX_ARRAY_SIZE - 1, data, size)
 		return true;
 	}
 
