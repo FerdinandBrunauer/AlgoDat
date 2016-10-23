@@ -144,12 +144,22 @@ void* GetListDataAt(List* list, unsigned int position)
 
 ListNode* GetListNodeAt(List* list, unsigned int position)
 {
-	ListNode* temp = list->front;
-
-	// Maybe we should check if it is faster to go from the back ??
-	for (unsigned int i = 1; i <= position; ++i)
+	ListNode* temp;
+	if (GetListLength(list) - position > position)
 	{
-		temp = temp->next;
+		temp = list->front;
+		for (unsigned int i = 1; i <= position; ++i)
+		{
+			temp = temp->next;
+		}
+	}
+	else
+	{
+		temp = list->back;
+		for (unsigned int i = 1; i <= position; ++i)
+		{
+			temp = temp->prev;
+		}
 	}
 
 	return temp;
