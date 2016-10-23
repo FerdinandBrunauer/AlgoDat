@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.25123.0
+VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.3_ConsoleCalculator", "2.3_ConsoleCalculator\2.3_ConsoleCalculator.vcxproj", "{F589618D-4D9B-4197-A4AD-4939C95BA6F5}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.8_StackQueueArrayImplementation", "2.8_StackQueueArrayImplementation\2.8_StackQueueArrayImplementation.vcxproj", "{3F1DC170-7A14-4408-88C3-9077DFE85341}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.7_ListTreeImplementation", "3.7_ListTreeImplementation\3.7_ListTreeImplementation.vcxproj", "{0F6AB139-DAD7-4F13-BEC2-28BFD6ED5621}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,6 +33,14 @@ Global
 		{3F1DC170-7A14-4408-88C3-9077DFE85341}.Release|x64.Build.0 = Release|x64
 		{3F1DC170-7A14-4408-88C3-9077DFE85341}.Release|x86.ActiveCfg = Release|Win32
 		{3F1DC170-7A14-4408-88C3-9077DFE85341}.Release|x86.Build.0 = Release|Win32
+		{0F6AB139-DAD7-4F13-BEC2-28BFD6ED5621}.Debug|x64.ActiveCfg = Debug|x64
+		{0F6AB139-DAD7-4F13-BEC2-28BFD6ED5621}.Debug|x64.Build.0 = Debug|x64
+		{0F6AB139-DAD7-4F13-BEC2-28BFD6ED5621}.Debug|x86.ActiveCfg = Debug|Win32
+		{0F6AB139-DAD7-4F13-BEC2-28BFD6ED5621}.Debug|x86.Build.0 = Debug|Win32
+		{0F6AB139-DAD7-4F13-BEC2-28BFD6ED5621}.Release|x64.ActiveCfg = Release|x64
+		{0F6AB139-DAD7-4F13-BEC2-28BFD6ED5621}.Release|x64.Build.0 = Release|x64
+		{0F6AB139-DAD7-4F13-BEC2-28BFD6ED5621}.Release|x86.ActiveCfg = Release|Win32
+		{0F6AB139-DAD7-4F13-BEC2-28BFD6ED5621}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
