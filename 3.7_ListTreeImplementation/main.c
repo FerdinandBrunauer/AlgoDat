@@ -1,9 +1,12 @@
 #pragma once
 
+#include <stdbool.h>
 #include <stdlib.h>
 #include <stdio.h>
+#include <time.h>
 
 #include "List.h"
+#include "BinaryTree.h"
 
 void TestList()
 {
@@ -70,9 +73,45 @@ void TestList()
 	free(list);
 }
 
+void TestTree()
+{
+	printf("** List Implementation **\n");
+	BinaryTree* tree = CreateIntTree();
+
+	printf("Add 50 random INT's from 0 to 100: [");
+	for (int i = 0; i < 50; ++i)
+	{
+		int number = rand() % 100;
+		AddTreeNodeWithData(tree, &number, sizeof(int));
+		printf(i == 0 ? "%d" : ", %d", number);
+	}
+	printf("]\n");
+
+	int number;
+	printf("Find INT by checking random INT's in tree: \n");
+	srand((unsigned int)time(0)); // Reset random
+	while (true)
+	{
+		number = rand() % 100;
+		bool contains = ContainsTreeNodeWithData(tree, &number);
+		printf("%d -> %s\n", number, contains == true ? "found" : "not found");
+
+		if (contains)
+		{
+			break;
+		}
+	}
+
+	printf("Remove found INT");
+	printf("Elements: %d\n", GetTreeElementCount(tree));
+	RemoveTreeNode(tree, &number);
+	printf("Elements: %d\n", GetTreeElementCount(tree));
+}
+
 int main()
 {
-	TestList();
+	// TestList();
+	TestTree();
 
 	printf("Finished ...");
 	getchar();

@@ -21,9 +21,15 @@
     <ClCompile Include="List.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BinaryTree.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="List.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="BinaryTree.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
